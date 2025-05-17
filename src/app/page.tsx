@@ -1,9 +1,15 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
-
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { store } from "@/lib/store";
+import { decerment, incerment } from "@/lib/counterSlice";
 export default function Home() {
+  const {counterReducer}:any= useSelector((state)=>state) ;
+ const dispatch =  useDispatch()
   return (
-    <div className={styles.page}>
+   <Provider store={store}>
+     <div className={styles.page}>
       <main className={styles.main}>
         <Image
           className={styles.logo}
@@ -18,6 +24,9 @@ export default function Home() {
             Get started by editing <code>src/app/page.tsx</code>.
           </li>
           <li>Save and see your changes instantly.</li>
+          <li onClick={()=>dispatch(incerment(5))}> +</li>
+          <li>counter state : {counterReducer.counter}</li>
+          <li onClick={()=>dispatch(decerment())}>- </li>
         </ol>
 
         <div className={styles.ctas}>
@@ -91,5 +100,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
+   </Provider>
   );
 }
