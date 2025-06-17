@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 
 function Login() {
 
-  const [isLoading , setIsLoading] = useState<Boolean>(false)
+  const [isLoading , setIsLoading] = useState<boolean>(false)
   const router = useRouter()
   const initialValues  : ValuesOfLogin= {
    
@@ -30,8 +30,8 @@ function Login() {
 
   interface ValuesOfLogin {
    
-    email: String,
-    password: String,
+    email: string,
+    password: string,
    
    
   };

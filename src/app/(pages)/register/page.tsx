@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 
 function Register() {
 
-  const [isLoading , setIsLoading] = useState<Boolean>(false)
+  const [isLoading , setIsLoading] = useState<boolean>(false)
   const router = useRouter()
   const initialValues  : ValuesOfRegister= {
     name: "",
@@ -31,11 +31,11 @@ function Register() {
   };
 
   interface ValuesOfRegister {
-    name: String,
-    email: String,
-    password: String,
-    rePassword: String,
-    dateOfBirth: String,
+    name: string,
+    email: string,
+    password: string,
+    rePassword: string,
+    dateOfBirth: string,
     gender: "male" | "female"
   };
 
