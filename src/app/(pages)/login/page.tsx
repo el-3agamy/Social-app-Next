@@ -2,16 +2,10 @@
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import SaveIcon from '@mui/icons-material/Save';
 import React, { useState } from 'react'
 import * as Formik from 'formik';
-import * as Yup from 'yup';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 
@@ -129,7 +123,6 @@ function Login() {
             fullWidth
             loading ={Boolean(isLoading)}
             loadingPosition="start"
-            // startIcon={<SaveIcon />}
             type='submit'
             sx={{ mt: 3 }}
           >Register</Button>
