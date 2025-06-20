@@ -8,13 +8,19 @@ import React, { useState } from 'react'
 import * as Formik from 'formik';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { setIsUserLoggedIn } from '@/app/lib/slices/authSlice'
 
 
 
 function Login() {
 
+
+
   const [isLoading , setIsLoading] = useState<boolean>(false)
   const router = useRouter()
+const dispatch = useDispatch()
+
   const initialValues  : ValuesOfLogin= {
    
     email: "",
@@ -37,7 +43,7 @@ function Login() {
       
     if (data.message === "success") {
       localStorage.setItem("token" , data.token)
-
+      dispatch(setIsUserLoggedIn(true))
       router.push('/')
       
     }

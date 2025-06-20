@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import { log } from "console";
-
 
 const getProducts = createAsyncThunk("counter" , ()=>{
     axios.get(`https://`)

@@ -14,6 +14,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsUserLoggedIn } from '@/app/lib/slices/authSlice';
+import { useRouter } from 'next/navigation';
 
 const pages = ['Home', 'Posts'];
 const settings = {
@@ -26,9 +29,15 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null); //
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null); //
 
-  const [isUserLoggedIn  , setIsUserLoggedIn] = React.useState <boolean | HTMLElement>(false)
+  // const [isUserLoggedIn  , setIsUserLoggedIn] = React.useState <boolean | HTMLElement>(false)
 
+const isUserLoggedIn = useSelector((state: any) => state.auth.isUserLoggedIn);
+const dispatch = useDispatch()
 
+// React.useEffect(()=>{
+
+//   dispatch(setIsUserLoggedIn(!!localStorage.getItem("token")))
+// } ,[])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -44,6 +53,16 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+
+const router = useRouter() ;
+
+const logOut = ()=>{
+  localStorage.removeItem("token") ;
+  dispatch(setIsUserLoggedIn(false))
+  router.push('/login') ;
+
+}
 
   return (
     <AppBar position="static">
@@ -68,7 +87,7 @@ function Navbar() {
             Circle
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          { isUserLoggedIn && <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -95,13 +114,20 @@ function Navbar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
+              { pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    <Link href={page === "Home" ? "/"  :"/" + page.toLowerCase() }
+                      style={{textDecoration : 'none' , color : "inherit"}}
+                      >
+                
+                     {page}</Link>
+                     
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box>}
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -122,13 +148,16 @@ function Navbar() {
             Circle
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {isUserLoggedIn && pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link href={page === "Home" ? "/"  :"/" + page.toLowerCase() }
+                      style={{textDecoration : 'none' , color : "inherit"}}
+                
+                >{page}</Link>
               </Button>
             ))}
           </Box>
@@ -157,13 +186,25 @@ function Navbar() {
               {
                 isUserLoggedIn ? 
                 settings.loggedIn.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={()=>{handleCloseUserMenu()
+                    // logoutFunction
+                  if (setting === "Logout") {
+                    logOut()
+                    handleCloseUserMenu()
+                }}}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))
                 :
                 settings.notLoggedIn.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting}
+                 onClick={()=>{
+                  handleCloseUserMenu() ;
+            
+                
+                  
+                 }}
+                 >
                    <Link style={{color:"inherit" , textDecoration:"none"}} href={"/" + setting.toLowerCase()}>
                      <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                    </Link>
