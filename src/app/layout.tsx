@@ -13,7 +13,7 @@ import Navbar from "./_components/Navbar/Navbar";
 import Footer from "./_components/Footer/Footer";
 import Box from "@mui/material/Box";
 import { Provider } from "react-redux";
-import store from "./lib/store";
+import store from "../lib/store";
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],

@@ -1,60 +1,45 @@
 "use client"
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import Post from '@/app/_components/post/post'
+import { getAllPosts, PostInterface } from '@/lib/slices/postSlice'
 import Container from '@mui/material/Container'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
 
+import Stack from '@mui/material/Stack'
+
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+
+// ككككككككككككككككككككككككككككككككككككككككك
+
+
+
+
+// ككككككككككككككككككككككككككككككككككككككككك
+
+ 
 const Posts = () => {
 
-  const [allPosts, setAllPosts] = useState<any>([])
-  async function getAllPosts(limit : number) {
-    const {data} = await axios.get(`https://linked-posts.routemisr.com/posts?limit=${limit}` , {
-      headers : {
-        token : localStorage.getItem('token')
-      }
-    })
-
-    setAllPosts(data.posts)
-    // console.log(data);
-  }
+const {posts} :{posts : PostInterface[]} =useSelector((state : any) => state.posts)
+const dispatch = useDispatch<any>()
 
   useEffect(()=>{
-    getAllPosts(50)
+    dispatch(getAllPosts())
   } , [])
+
+
+
   return (
     <>
-    <div>
-      <Container>
-        {/* <Button onClick={()=>getAllPosts(50)}  sx={{ my: 2, color: 'black', display: 'block'  }} variant='outlined'>
-          
+    <Container maxWidth={'sm'}>
+      <Stack spacing={3} width={"100%"}   justifyContent={"center"} >
+        
+            {
+              posts.map((post)=><Post post={post} />)
+            }
+      
 
-          Get All posts
-          
-        </Button> */}
-        <Stack
-        direction={"row"}
-        spacing={3}
-        width={"33%"}
-        >
-            <Box>
-              {
-                allPosts.map((post : any)=>{
-                  return(
-                    <Stack key={post?._id} maxWidth={"100%"}>
-                        <Typography 
-                            sx={{bgcolor : "red" , width : "100%"}}                        
-                        >{post?.body}</Typography>
-                    </Stack>
-                  )
-                })
-              }
-            </Box>
-        </Stack>
-      </Container>
-    </div>
+      </Stack >
+    </Container>
     </>
   )
 }

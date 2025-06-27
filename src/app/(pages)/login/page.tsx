@@ -9,7 +9,7 @@ import * as Formik from 'formik';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { setIsUserLoggedIn } from '@/app/lib/slices/authSlice'
+import { setIsUserLoggedIn } from '@/lib/slices/authSlice'
 
 
 

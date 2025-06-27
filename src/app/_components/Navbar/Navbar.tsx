@@ -15,8 +15,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsUserLoggedIn } from '@/app/lib/slices/authSlice';
-import { useRouter } from 'next/navigation';
+import { setIsUserLoggedIn } from '@/lib/slices/authSlice';
+import { usePathname, useRouter } from 'next/navigation';
 
 const pages = ['Home', 'Posts'];
 const settings = {
@@ -26,6 +26,8 @@ const settings = {
 
 function Navbar() {
 
+
+  const pathName = usePathname()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null); //
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null); //
 
@@ -119,6 +121,8 @@ const logOut = ()=>{
                   <Typography sx={{ textAlign: 'center' }}>
                     <Link href={page === "Home" ? "/"  :"/" + page.toLowerCase() }
                       style={{textDecoration : 'none' , color : "inherit"}}
+                       
+
                       >
                 
                      {page}</Link>
