@@ -26,6 +26,7 @@ const {id} = useParams  <any>()
   return (
     <>
         <div>PostDetails</div>
+
         {
           post ?
           <Post post={post} />

@@ -228,7 +228,6 @@ function Register() {
             fullWidth
             loading ={Boolean(isLoading)}
             loadingPosition="start"
-            // startIcon={<SaveIcon />}
             type='submit'
             sx={{ mt: 3 }}
           >Register</Button>

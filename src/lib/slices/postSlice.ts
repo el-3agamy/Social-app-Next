@@ -21,7 +21,7 @@ import axios from "axios";
 }
 
 
- interface User{
+ export interface User{
     _id: string;
     name: string;
     photo: string;
@@ -37,7 +37,7 @@ interface PostsSliceInitialStste {
 
 }
 
-const initialState : PostsSliceInitialStste =  {
+ const initialState : PostsSliceInitialStste =  {
         posts : [] ,
         post : null ,
         isLoading : true
@@ -45,15 +45,21 @@ const initialState : PostsSliceInitialStste =  {
 
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts" , async ()=>{
-    const {data} = await axios.get(`https://linked-posts.routemisr.com/posts?limit=50` , {
+    const {data} = await axios.get(`https://linked-posts.routemisr.com/posts` , {
+        headers : {
+            token : localStorage.getItem("token")
+        }
+    })
+  const {data : finalData} = await axios.get(`https://linked-posts.routemisr.com/posts?page=${data.paginationInfo.numberOfPages}` , {
         headers : {
             token : localStorage.getItem("token")
         }
     })
     console.log(data.posts);
     
-    return data.posts
+    return finalData.posts.reverse()
 })
+
 export const getSinglePost = createAsyncThunk("posts/getSinglePost" , async (id : string)=>{
     const {data} = await axios.get(`https://linked-posts.routemisr.com/posts/${id}` , {
         headers : {
@@ -77,16 +83,16 @@ const postSlice = createSlice({
             state.posts = action.payload
         }
     } ,
-    extraReducers (bullider){
-        bullider.addCase(getAllPosts.fulfilled , (state , action)=>{
+    extraReducers (builder){
+        builder.addCase(getAllPosts.fulfilled , (state , action)=>{
             state.posts = action.payload
         }) 
 
-        bullider.addCase(getSinglePost.fulfilled , (state , action)=>{
+        builder.addCase(getSinglePost.fulfilled , (state , action)=>{
             state.post = action.payload
             state.isLoading = false
         })
-        bullider.addCase(getSinglePost.pending , (state)=>{
+        builder.addCase(getSinglePost.pending , (state)=>{
             state.isLoading = true
 
         })

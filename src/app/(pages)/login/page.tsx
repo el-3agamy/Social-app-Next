@@ -21,6 +21,14 @@ function Login() {
   const router = useRouter()
 const dispatch = useDispatch()
 
+ interface ValuesOfLogin {
+   
+    email: string,
+    password: string,
+   
+   
+  };
+  
   const initialValues  : ValuesOfLogin= {
    
     email: "",
@@ -28,13 +36,7 @@ const dispatch = useDispatch()
   
   };
 
-  interface ValuesOfLogin {
-   
-    email: string,
-    password: string,
-   
-   
-  };
+ 
 
   const onSubmit = async (values: ValuesOfLogin) => {
     setIsLoading(true)
@@ -49,7 +51,6 @@ const dispatch = useDispatch()
     }
      
   };
-
 
 
   const formik = Formik.useFormik({

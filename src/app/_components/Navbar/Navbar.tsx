@@ -31,15 +31,11 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null); //
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null); //
 
-  // const [isUserLoggedIn  , setIsUserLoggedIn] = React.useState <boolean | HTMLElement>(false)
 
 const isUserLoggedIn = useSelector((state: any) => state.auth.isUserLoggedIn);
 const dispatch = useDispatch()
 
-// React.useEffect(()=>{
 
-//   dispatch(setIsUserLoggedIn(!!localStorage.getItem("token")))
-// } ,[])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

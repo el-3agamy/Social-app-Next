@@ -16,11 +16,11 @@ interface CommentDetailsInterface {
     id : string
 }
 
-const initialState = {
+export const initialState = {
     comments : []
 }
 
-const getAllComments = createAsyncThunk("getAllComments/comment" , async ()=>{
+export const getAllComments = createAsyncThunk("getAllComments/comment" , async ()=>{
 
         const {data } = await axios.get(``) ;
         console.log(data);
